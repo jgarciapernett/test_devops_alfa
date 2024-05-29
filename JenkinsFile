@@ -5,10 +5,10 @@ pipeline {
       disableConcurrentBuilds()
   }
   stages {
-    stage('PRUEBA ALFA') {
+    stage('PRUEBA  ALFA') {
         steps  {
           echo "alfa_test prueba"
          }
       }
     }
-  }
+  } 

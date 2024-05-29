@@ -7,8 +7,8 @@ pipeline {
   stages {
     stage('PRUEBA ALFA') {
         steps  {
-          echo "alfa_test"
-        }
+          echo "alfa_test prueba"
+         }
       }
     }
   }

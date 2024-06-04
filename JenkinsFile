@@ -4,32 +4,11 @@ pipeline {
       buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
       disableConcurrentBuilds()
   }
-<<<<<<< HEAD
+
 stages {
         stage('Build') { 
             steps { 
-                 echo "alfa_test prueba" 
-            }
-        }
-      stage('Print Directory') {
-            steps {
-                script {
-                    sh 'echo Current Directory: %CD%'
-                }
-            }
-        }
-  stage('Version Java') {
-            steps {
-                script {
-                    sh 'java --version'
-                }
-            }
-        }
-  stage('Generamos Jar') {
-            steps {
-                script {
-                    sh 'mvn clean package'
-                }
+                sh 'make' 
             }
         }
 
@@ -52,25 +31,15 @@ stages {
 
   stage('List Imagen Docker') {
             steps {
-                script {
-                    sh 'docker ps'
-                }
+                sh 'make check'
+                junit 'reports/**/*.xml' 
             }
         }
 
         stage('Hodolint Stage') {
             steps {
-                sh 'hadolint Dockerfile --no-color --failure-threshold error | tee -a hadolint_lint.t'
+                sh 'make publish' 
             }
         }
     }
   } 
-=======
-  stages {
-    stage('PRUEBA  ALFA') {
-        steps  {
-          echo "alfa_test prueba"
-         }
-      }
-    } 
-  }  

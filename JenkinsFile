@@ -10,9 +10,11 @@ stages {
                  echo "alfa_test prueba" 
             }
         }
-        stage('Test'){
+      stage('Print Directory') {
             steps {
-                 bat 'mvn -version'
+                script {
+                    bat 'echo Current Directory: %CD%'
+                }
             }
         }
         stage('Deploy') {

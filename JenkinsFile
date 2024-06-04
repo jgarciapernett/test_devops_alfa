@@ -4,42 +4,11 @@ pipeline {
       buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
       disableConcurrentBuilds()
   }
-
-stages {
-        stage('Build') { 
-            steps { 
-                sh 'make' 
-            }
-        }
-
- stage('Ejecutamos Pruebas Unitarias') {
-            steps {
-                script {
-                    sh 'mvn test'
-                    junit '**/target/surefire-reports/*.xml'
-                }
-            }
-        }
-
-  stage('Imagen Docker') {
-            steps {
-                script {
-                    sh 'docker build -t devops-spring-alfa/docker .'
-                }
-            }
-        }
-
-  stage('List Imagen Docker') {
-            steps {
-                sh 'make check'
-                junit 'reports/**/*.xml' 
-            }
-        }
-
-        stage('Hodolint Stage') {
-            steps {
-                sh 'make publish' 
-            }
-        }
-    }
+  stages {
+    stage('PRUEBA  ALFA') {
+        steps  {
+          echo "alfa_test prueba"
+         }
+      }
+    } 
   } 

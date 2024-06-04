@@ -12,5 +12,5 @@ pipeline {
           echo "alfa_test prueba"
          }
       }
-    }
+    } 
   } 

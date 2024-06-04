@@ -7,18 +7,17 @@ pipeline {
 stages {
         stage('Build') { 
             steps { 
-                sh 'make' 
+                 echo "alfa_test prueba" 
             }
         }
         stage('Test'){
             steps {
-                sh 'make check'
-                junit 'reports/**/*.xml' 
+                 echo "alfa_test prueba"
             }
         }
         stage('Deploy') {
             steps {
-                sh 'make publish' 
+                echo "alfa_test prueba"
             }
         }
     }

@@ -4,6 +4,10 @@ pipeline {
       buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
       disableConcurrentBuilds()
   }
+  tools {
+        maven 'Maven 3.9.7'
+        jdk 'jdk8'
+    }
 stages {
         stage('Build') { 
             steps { 

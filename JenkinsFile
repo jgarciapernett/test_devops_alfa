@@ -19,9 +19,8 @@ stages {
         }
   stage('Version Mave') {
             steps {
-                script {
-                     bat 'make check'
-                }
+               unstash 'app'
+                bat 'make check'
             }
         }
         stage('Deploy') {

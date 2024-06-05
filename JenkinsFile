@@ -20,7 +20,7 @@ stages {
   stage('Version Mave') {
             steps {
                 script {
-                    bat "mvn -version"
+                    bat 'mvn -version'
                 }
             }
         }

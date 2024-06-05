@@ -1,33 +1,41 @@
 pipeline {
-  agent any
-  options {
-      buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
-      disableConcurrentBuilds()
-  }
-stages {
-        stage('Build') { 
-            steps { 
-                 echo "alfa_test prueba" 
+    agent none
+    stages {
+        stage('Build') {
+            agent any
+            steps {
+                checkout scm
+                sh 'make'
+                stash includes: '**/target/*.jar', name: 'app' 
             }
         }
-      stage('Print Directory') {
+        stage('Test on Linux') {
+            agent { 
+                label 'linux'
+            }
             steps {
-                script {
-                    bat 'echo Current Directory: %CD%'
+                unstash 'app' 
+                sh 'make check'
+            }
+            post {
+                always {
+                    junit '**/target/*.xml'
                 }
             }
         }
-  stage('Version Mave') {
-            steps {
-                script {
-                     bat 'mvn -version'
-                }
+        stage('Test on Windows') {
+            agent {
+                label 'windows'
             }
-        }
-        stage('Deploy') {
             steps {
-                echo "alfa_test prueba"
+                unstash 'app'
+                bat 'make check' 
+            }
+            post {
+                always {
+                    junit '**/target/*.xml'
+                }
             }
         }
     }
-  } 
+}

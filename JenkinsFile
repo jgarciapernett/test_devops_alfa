@@ -17,13 +17,6 @@ stages {
                 }
             }
         }
-  stage('Version Mave') {
-            steps {
-                script {
-                     bat 'mvn -version'
-                }
-            }
-        }
         stage('Deploy') {
             steps {
                 echo "alfa_test prueba"

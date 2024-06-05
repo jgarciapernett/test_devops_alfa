@@ -1,23 +1,33 @@
 pipeline {
-    agent any
-options {
+  agent any
+  options {
       buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
       disableConcurrentBuilds()
   }
-    stages {
-        stage ('Initialize') {
-            steps {
-                bat '''
-                    echo "PATH = ${PATH}"
-                    echo "MAVEN_HOME = ${MAVEN_HOME}"
-                ''' 
+stages {
+        stage('Build') { 
+            steps { 
+                 echo "alfa_test prueba" 
             }
         }
-
-        stage ('Build') {
+      stage('Print Directory') {
             steps {
-                echo 'This is a minimal pipeline.'
+                script {
+                    bat 'echo Current Directory: %CD%'
+                }
+            }
+        }
+  stage('Version Mave') {
+            steps {
+                script {
+                     bat 'mvn -version'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "alfa_test prueba"
             }
         }
     }
-}
+  } 

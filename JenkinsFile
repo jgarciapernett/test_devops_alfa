@@ -20,7 +20,8 @@ stages {
   stage('Version Mave') {
             steps {
                 script {
-                    bat 'mvn -version'
+                     unstash 'app'
+                     bat 'make check'
                 }
             }
         }

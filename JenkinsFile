@@ -1,26 +1,62 @@
 pipeline {
-  agent any
-  options {
-      buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
-      disableConcurrentBuilds()
-  }
-stages {
-        stage('Build') { 
-            steps { 
-                 echo "alfa_test prueba" 
+    agent {
+        label 'docker-windows-agent' // Etiqueta para un nodo Windows con Docker Desktop instalado
+    }
+
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '5'))
+    }
+
+    environment {
+        DOCKER_IMAGE = 'mi-proyecto-docker'
+        DOCKER_REGISTRY = 'localhost:8000' // Registro Docker local
+        DOCKER_CREDENTIALS_ID = 'docker-creds' // ID de credenciales en Jenkins
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
         }
-      stage('Print Directory') {
+
+        stage('Build Docker Image') {
             steps {
-                script {
-                    bat 'echo Current Directory: %CD%'
+                bat "docker build -t ${DOCKER_IMAGE}:${env.BUILD_ID} ."
+            }
+        }
+
+        stage('Test Docker Image') {
+            steps {
+                bat "docker run --rm ${DOCKER_IMAGE}:${env.BUILD_ID} npm test" // Ejecuta pruebas (ajusta según tu proyecto)
+            }
+        }
+
+        stage('Push to Local Registry') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    bat "docker login -u '${DOCKER_USER}' --password '${DOCKER_PASS}' ${DOCKER_REGISTRY}"
+                    bat "docker tag ${DOCKER_IMAGE}:${env.BUILD_ID} ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${env.BUILD_ID}"
+                    bat "docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${env.BUILD_ID}"
                 }
             }
         }
-        stage('Deploy') {
+
+        stage('Deploy to Local Environment') {
             steps {
-                echo "alfa_test prueba"
+                bat "docker-compose -f docker-compose.yml pull" // Actualiza imágenes en docker-compose
+                bat "docker-compose -f docker-compose.yml up -d" // Inicia/reinicia servicios
             }
         }
     }
-  } 
+
+    post {
+        always {
+            // Limpieza: elimina imágenes locales no utilizadas
+            bat "docker image prune -f"
+        }
+        // ... (notificaciones, etc.)
+    }
+}

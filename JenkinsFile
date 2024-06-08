@@ -27,7 +27,7 @@ stages {
   stage('Generamos Jar') {
             steps {
                 script {
-                    bat './mvnw package && java target/devops-alfa'
+                    bat 'mvn package && java target/devops-alfa'
                 }
             }
         }

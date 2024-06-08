@@ -17,6 +17,13 @@ stages {
                 }
             }
         }
+  stage('Print Directory') {
+            steps {
+                script {
+                    bat 'java --version'
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 echo "alfa_test prueba"

@@ -17,7 +17,7 @@ stages {
                 }
             }
         }
-  stage('Print Directory') {
+  stage('Version Java') {
             steps {
                 script {
                     bat 'java --version'

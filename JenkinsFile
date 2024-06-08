@@ -35,7 +35,7 @@ stages {
   stage('Imagen Docker') {
             steps {
                 script {
-                    bat 'sudo docker build -t devops-spring-alfa/docker .'
+                    bat 'docker build -t devops-spring-alfa/docker .'
                 }
             }
         }

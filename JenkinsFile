@@ -24,6 +24,26 @@ stages {
                 }
             }
         }
+  stage('Generamos Jar') {
+            steps {
+                script {
+                    bat './mvnw package && java target/devops-alfa'
+                }
+            }
+        }
+
+  stage('Generamos Jar') {
+            steps {
+                script {
+                    bat 'docker build -t devops-spring-alfa/docker .'
+                }
+            }
+        }
+
+
+
+
+
         stage('Deploy') {
             steps {
                 echo "alfa_test prueba"

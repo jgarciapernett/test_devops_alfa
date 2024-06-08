@@ -35,7 +35,7 @@ stages {
   stage('Generamos Jar') {
             steps {
                 script {
-                    bat 'docker build -t devops-spring-alfa/docker .'
+                    bat 'sudo docker build -t devops-spring-alfa/docker .'
                 }
             }
         }

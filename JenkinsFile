@@ -40,6 +40,16 @@ stages {
             }
         }
 
+  stage('List Imagen Docker') {
+            steps {
+                script {
+                    bat 'docker images'
+                }
+            }
+        }
+
+
+
 
         stage('Deploy') {
             steps {

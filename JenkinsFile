@@ -17,6 +17,40 @@ stages {
                 }
             }
         }
+  stage('Version Java') {
+            steps {
+                script {
+                    bat 'java --version'
+                }
+            }
+        }
+  stage('Generamos Jar') {
+            steps {
+                script {
+                    bat 'mvn clean package'
+                }
+            }
+        }
+
+  stage('Imagen Docker') {
+            steps {
+                script {
+                    bat 'docker build -t devops-spring-alfa/docker .'
+                }
+            }
+        }
+
+  stage('List Imagen Docker') {
+            steps {
+                script {
+                    bat 'docker images'
+                }
+            }
+        }
+
+
+
+
         stage('Deploy') {
             steps {
                 echo "alfa_test prueba"

@@ -36,9 +36,12 @@ stages {
             steps {
                 script {
                     bat 'mvn test'
+                    junit './target/surefire-reports/TEST-com.alfatest.test.TestApplicationTests.xml'
                 }
             }
         }
+
+
 
 
 

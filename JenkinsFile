@@ -51,7 +51,7 @@ stages {
   stage('Prueba Junit') {
             steps {
                 script {
-                    bat '  junit 'src/reports/*test.xml''
+                    junit 'src/reports/*test.xml''
                 }
             }
         }

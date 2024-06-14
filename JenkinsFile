@@ -32,6 +32,16 @@ stages {
             }
         }
 
+ stage('Ejecutamos Pruebas Unitarias') {
+            steps {
+                script {
+                    bat 'mvn test'
+                }
+            }
+        }
+
+
+
   stage('Imagen Docker') {
             steps {
                 script {

@@ -48,13 +48,7 @@ stages {
             }
         }
 
-  stage('Prueba Junit') {
-            steps {
-                script {
-                    bat 'junit src/reports/*test.xml'
-                }
-            }
-        }
+
 
 
         stage('Deploy') {

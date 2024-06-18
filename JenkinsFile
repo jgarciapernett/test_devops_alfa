@@ -13,21 +13,21 @@ stages {
       stage('Print Directory') {
             steps {
                 script {
-                    bat 'echo Current Directory: %CD%'
+                    sh 'echo Current Directory: %CD%'
                 }
             }
         }
   stage('Version Java') {
             steps {
                 script {
-                    bat 'java --version'
+                    sh 'java --version'
                 }
             }
         }
   stage('Generamos Jar') {
             steps {
                 script {
-                    bat 'mvn clean package'
+                    sh 'mvn clean package'
                 }
             }
         }
@@ -35,7 +35,7 @@ stages {
  stage('Ejecutamos Pruebas Unitarias') {
             steps {
                 script {
-                    bat 'mvn test'
+                    sh 'mvn test'
                     junit '**/target/surefire-reports/*.xml'
                 }
             }
@@ -48,7 +48,7 @@ stages {
   stage('Imagen Docker') {
             steps {
                 script {
-                    bat 'docker build -t devops-spring-alfa/docker .'
+                    sh 'docker build -t devops-spring-alfa/docker .'
                 }
             }
         }
@@ -56,7 +56,7 @@ stages {
   stage('List Imagen Docker') {
             steps {
                 script {
-                    bat 'docker images'
+                    sh 'docker images'
                 }
             }
         }

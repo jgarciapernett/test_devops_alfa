@@ -27,7 +27,7 @@ stages {
   stage('Generamos Jar') {
             steps {
                 script {
-                    sh 'mvn clean package'
+                    sh 'sudo mvn clean package'
                 }
             }
         }
@@ -35,7 +35,7 @@ stages {
  stage('Ejecutamos Pruebas Unitarias') {
             steps {
                 script {
-                    sh 'mvn test'
+                    sh 'sudo mvn test'
                     junit '**/target/surefire-reports/*.xml'
                 }
             }
@@ -48,7 +48,7 @@ stages {
   stage('Imagen Docker') {
             steps {
                 script {
-                    sh 'docker build -t devops-spring-alfa/docker .'
+                    sh 'sudo docker build -t devops-spring-alfa/docker .'
                 }
             }
         }

@@ -69,5 +69,11 @@ stages {
                 e "alfa_test prueba"
             }
         }
+
+           stage('Deploy') {
+            steps {
+                echo "Finalizacion de Stage"
+            }
+        }
     }
   } 

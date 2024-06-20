@@ -12,8 +12,39 @@ stages {
         }
         stage('Test'){
             steps {
-                sh 'make check'
-                junit 'reports/**/*.xml' 
+                script {
+                    bat 'echo Current Directory: %CD%'
+                }
+            }
+        }
+  stage('Version Java') {
+            steps {
+                script {
+                    bat 'java --version'
+                }
+            }
+        }
+  stage('Generamos Jar') {
+            steps {
+                script {
+                    bat 'mvn clean package'
+                }
+            }
+        }
+
+  stage('Imagen Docker') {
+            steps {
+                script {
+                    bat 'docker build -t devops-spring-alfa/docker .'
+                }
+            }
+        }
+
+  stage('List Imagen Docker') {
+            steps {
+                script {
+                    bat 'docker images'
+                }
             }
         }
 

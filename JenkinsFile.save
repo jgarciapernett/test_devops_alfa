@@ -1,0 +1,73 @@
+pipeline {
+  agent any
+  options {
+      buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
+      disableConcurrentBuilds()
+  }
+stages {
+        stage('Build') { 
+            steps { 
+                 echo "alfa_test prueba" 
+            }
+        }
+      stage('Print Directory') {
+            steps {
+                script {
+                    sh 'echo Current Directory: %CD%'
+                }
+            }
+        }
+  stage('Version Java') {
+            steps {
+                script {
+                    sh 'java --version'
+                }
+            }
+        }
+  stage('Generamos Jar') {
+            steps {
+                script {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+
+ stage('Ejecutamos Pruebas Unitarias') {
+            steps {
+                script {
+                    sh 'mvn test'
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+
+
+
+
+  stage('Imagen Docker') {
+            steps {
+                script {
+                    sh 'docker build -t devops-spring-alfa/docker .'
+                }
+            }
+        }
+
+  stage('List Imagen Docker') {
+            steps {
+                script {
+                    sh 'docker images'
+                }
+            }
+        }
+
+
+
+
+        stage('Deploy') {
+            steps {
+                e "alfa_test prueba"
+            }
+        }
+    }
+  } 

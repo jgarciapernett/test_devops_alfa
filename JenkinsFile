@@ -83,10 +83,6 @@ stages {
             }
         }
 
-
-
-
-
   stage('Imagen Docker') {
             steps {
                 script {

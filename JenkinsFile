@@ -7,17 +7,22 @@ pipeline {
 stages {
         stage('Build') { 
             steps { 
-                sh 'make' 
+                 echo "alfa_test prueba" 
             }
         }
-        stage('Test'){
+      stage('Print Directory') {
             steps {
                 script {
+<<<<<<< HEAD
                     bat 'echo Current Directory: %CD%'
+=======
+                    sh 'echo Current Directory: %CD%'
+>>>>>>> develop
                 }
             }
         }
   stage('Version Java') {
+<<<<<<< HEAD
             steps {
                 script {
                     bat 'java --version'
@@ -54,6 +59,54 @@ stages {
         stage('Deploy') {
             steps {
                 echo "alfa_test prueba"
+=======
+            steps {
+                script {
+                    sh 'java --version'
+                }
+            }
+        }
+  stage('Generamos Jar') {
+            steps {
+                script {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+
+ stage('Ejecutamos Pruebas Unitarias') {
+            steps {
+                script {
+                    sh 'mvn test'
+                    junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+
+
+
+
+  stage('Imagen Docker') {
+            steps {
+                script {
+                    sh 'docker build -t devops-spring-alfa/docker .'
+                }
+            }
+        }
+
+  stage('List Imagen Docker') {
+            steps {
+                script {
+                    sh 'docker ps'
+                }
+            }
+        }
+
+        stage('Hodolint Stage') {
+            steps {
+                sh 'hadolint Dockerfile --no-color --failure-threshold error | tee -a hadolint_lint.t'
+>>>>>>> develop
             }
         }
     }

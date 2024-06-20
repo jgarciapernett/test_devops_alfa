@@ -1,6 +1,4 @@
-FROM openjdk:21
-VOLUME /tmp
-ENV IMG_PATH=/img
-EXPOSE 8000
-ADD /target/test-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM openjdk:21-jdk-slim
+COPY "./target/spring-boot-docker-0.0.2.jar" "app.jar"
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]

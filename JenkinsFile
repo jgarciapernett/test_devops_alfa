@@ -7,44 +7,13 @@ pipeline {
 stages {
         stage('Build') { 
             steps { 
-                 echo "alfa_test prueba" 
+                sh 'make' 
             }
         }
-      stage('Print Directory') {
+        stage('Test'){
             steps {
-                script {
-                    bat 'echo Current Directory: %CD%'
-                }
-            }
-        }
-  stage('Version Java') {
-            steps {
-                script {
-                    bat 'java --version'
-                }
-            }
-        }
-  stage('Generamos Jar') {
-            steps {
-                script {
-                    bat 'mvn clean package'
-                }
-            }
-        }
-
-  stage('Imagen Docker') {
-            steps {
-                script {
-                    bat 'docker build -t devops-spring-alfa/docker .'
-                }
-            }
-        }
-
-  stage('List Imagen Docker') {
-            steps {
-                script {
-                    bat 'docker images'
-                }
+                sh 'make check'
+                junit 'reports/**/*.xml' 
             }
         }
 

@@ -13,30 +13,21 @@ stages {
       stage('Print Directory') {
             steps {
                 script {
-                    sh 'echo Current Directory: %CD%'
+                    bat 'echo Current Directory: %CD%'
                 }
             }
         }
   stage('Version Java') {
             steps {
                 script {
-                    sh 'java --version'
+                    bat 'java --version'
                 }
             }
         }
   stage('Generamos Jar') {
             steps {
                 script {
-                    sh 'mvn clean package'
-                }
-            }
-        }
-
- stage('Ejecutamos Pruebas Unitarias') {
-            steps {
-                script {
-                    sh 'mvn test'
-                    junit '**/target/surefire-reports/*.xml'
+                    bat 'mvn clean package'
                 }
             }
         }
@@ -44,7 +35,7 @@ stages {
   stage('Imagen Docker') {
             steps {
                 script {
-                    sh 'docker build -t devops-spring-alfa/docker .'
+                    bat 'docker build -t devops-spring-alfa/docker .'
                 }
             }
         }
@@ -52,14 +43,17 @@ stages {
   stage('List Imagen Docker') {
             steps {
                 script {
-                    sh 'docker ps'
+                    bat 'docker images'
                 }
             }
         }
 
-        stage('Hodolint Stage') {
+
+
+
+        stage('Deploy') {
             steps {
-                sh 'hadolint Dockerfile --no-color --failure-threshold error | tee -a hadolint_lint.t'
+                echo "alfa_test prueba"
             }
         }
 

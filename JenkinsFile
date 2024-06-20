@@ -41,10 +41,6 @@ stages {
             }
         }
 
-
-
-
-
   stage('Imagen Docker') {
             steps {
                 script {
@@ -56,17 +52,14 @@ stages {
   stage('List Imagen Docker') {
             steps {
                 script {
-                    sh 'docker images'
+                    sh 'docker ps'
                 }
             }
         }
 
-
-
-
-        stage('Deploy') {
+        stage('Hodolint Stage') {
             steps {
-                e "alfa_test prueba"
+                sh 'hadolint Dockerfile --no-color --failure-threshold error | tee -a hadolint_lint.t'
             }
         }
 

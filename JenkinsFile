@@ -63,6 +63,15 @@ stages {
             }
         }
 
+     stage('Conexion AWS Key') {
+            steps {
+              withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                        sh 'aws --version'
+                        sh 'aws s3 ls'
+                    }
+            }
+        }
+
            stage('Deploy') {
             steps {
                 echo "Finalizacion de Stage"

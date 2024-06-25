@@ -5,26 +5,8 @@ pipeline {
       disableConcurrentBuilds()
   }
 stages {
-        stage('Build') { 
-            steps { 
-                 echo "alfa_test prueba" 
-            }
-        }
-      stage('Print Directory') {
-            steps {
-                script {
-                    sh 'echo Current Directory: %CD%'
-                }
-            }
-        }
-  stage('Version Java') {
-            steps {
-                script {
-                    sh 'java --version'
-                }
-            }
-        }
-  stage('Generamos Jar') {
+
+  stage('Build') {
             steps {
                 script {
                     sh 'mvn clean package'
@@ -49,13 +31,6 @@ stages {
             }
         }
 
-  stage('List Imagen Docker') {
-            steps {
-                script {
-                    sh 'docker ps'
-                }
-            }
-        }
 
         stage('Hodolint Stage') {
             steps {
@@ -66,11 +41,9 @@ stages {
      stage('Conexion AWS Key and Login push ECR AWS') {
             steps {
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh 'aws --version'
-                        sh 'aws s3 ls'
                         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
-                        sh 'docker tag 106786d0ec63 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
-                        sh 'docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
+                        sh 'docker tag devops-spring-alfa/docker:latest 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:v1.0.0'
+                        sh 'docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:v1.0.0'
                     }
             }
         }

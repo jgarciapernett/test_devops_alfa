@@ -38,6 +38,13 @@ stages {
             }
         }
        
+       
+        stage('Definir Variables') {
+            steps {
+                 def latestTag = sh'git describe --tags --abbrev=0'
+            }
+        }
+       
 
      stage('Conexion AWS Key and Login push ECR AWS') {
             steps {

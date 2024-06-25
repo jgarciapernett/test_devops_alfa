@@ -59,8 +59,8 @@ stages {
                 }
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
-                        sh "docker tag devops-spring-alfa/docker:latest 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:${latestTag}"
-                        sh "docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:${latestTag}"
+                        sh "docker tag devops-spring-alfa/docker:latest 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:e19554a"
+                        sh "docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:e19554a"
                         sh 'docker logout 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
                     }
             }

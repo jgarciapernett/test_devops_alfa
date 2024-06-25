@@ -37,11 +37,22 @@ stages {
                 sh 'hadolint Dockerfile --no-color --failure-threshold error | tee -a hadolint_lint.t'
             }
         }
+        /*Prueba definicion de Variables*/
+          stage('Logs de definicion de variables') {
+            steps {
+                script{
+                    def latestTag = sh 'git describe --tags --abbrev=0'
+                }
+            }
+            steps {
+                sh "echo {$latestTag}"
+            }
+        }
+        /**/
 
      stage('Conexion AWS Key and Login push ECR AWS') {
             steps {
                 script{
-                    sh 'git log'
                     def latestTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
                 }
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {

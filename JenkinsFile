@@ -38,10 +38,10 @@ stages {
             }
         }
         /*Prueba definicion de Variables*/
-          stage('Logs de definicion de variables') {
+          stage('definicion de variables') {
             steps {
                 script{
-                    def latestTag = sh 'git describe --tags --abbrev=0'
+                    def latestTag = sh(script: 'git describe --tags --abbrev=0')
                 }
             }
             steps {

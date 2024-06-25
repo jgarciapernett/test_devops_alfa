@@ -42,7 +42,7 @@ stages {
         stage('Definir Variables') {
             steps {
                   script {
-                   def browser = sh(returnStdout: true, script: 'git describe --tags --abbrev=0')
+                   def browser = sh(returnStdout: true, script: 'git describe --always')
                 }
             }
         }
@@ -51,7 +51,7 @@ stages {
      stage('Conexion AWS Key and Login push ECR AWS') {
             steps {
                 script{
-                    def latestTag = sh(script: 'git describe --always', returnStdout: true).trim()
+                    def latestTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
                 }
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'

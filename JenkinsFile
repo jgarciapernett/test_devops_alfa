@@ -40,8 +40,10 @@ stages {
 
      stage('Conexion AWS Key and Login push ECR AWS') {
             steps {
+                script{
+                    def latestTag = sh(script: 'git describe --tags $(git rev-list --tags --max-count=1)', returnStdout: true).trim()
+                }
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        def latestTag = sh(script: 'git describe --tags $(git rev-list --tags --max-count=1)', returnStdout: true).trim()
                         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
                         sh "docker tag devops-spring-alfa/docker:latest 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:{$latestTag}"
                         sh "docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:{$latestTag}"

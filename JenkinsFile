@@ -45,6 +45,9 @@ stages {
                    def browser = sh(returnStdout: true, script: 'git describe --always')
                 }
             }
+            steps {
+                      echo "{{$browser}}"
+            }
         }
        
 

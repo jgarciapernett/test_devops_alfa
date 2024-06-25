@@ -41,6 +41,7 @@ stages {
      stage('Conexion AWS Key and Login push ECR AWS') {
             steps {
                 script{
+                    sh 'git log'
                     def latestTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
                 }
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {

@@ -45,7 +45,7 @@ stages {
                 }
             }
             steps {
-                sh "echo {$latestTag}"
+                sh "echo ${latestTag}"
             }
         }
         /**/

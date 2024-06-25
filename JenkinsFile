@@ -41,7 +41,9 @@ stages {
        
         stage('Definir Variables') {
             steps {
-                 def latestTag = sh 'git describe --tags --abbrev=0'
+                 script {
+                 def latestTag = sh(script:'git describe --tags --abbrev=0')
+                 }
             }
         }
        

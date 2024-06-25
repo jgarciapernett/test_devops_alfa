@@ -42,7 +42,8 @@ stages {
         stage('Definir Variables') {
             steps {
                   script {
-                   def browser = sh(returnStdout: true, script: 'git describe --always')
+                  // def browser = sh(returnStdout: true, script: 'git describe --always')
+                   def browser = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
                     echo "${browser}"
                 }
                 
@@ -57,7 +58,7 @@ stages {
                 script{
                     def latestTag = sh(script: 'git describe --always', returnStdout: true).trim()
                     echo "${latestTag}"
-              withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
                         sh "docker tag devops-spring-alfa/docker:latest 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:${latestTag}"
                         sh "docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:${latestTag}"

@@ -69,7 +69,7 @@ stages {
                         sh 'aws --version'
                         sh 'aws s3 ls'
                         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
-                        sh 'docker tag d74cde9d43ba 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
+                        sh 'docker tag 106786d0ec63 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
                         sh 'docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
                     }
             }

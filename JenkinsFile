@@ -42,7 +42,7 @@ stages {
         stage('Definir Variables') {
             steps {
                   script {
-                   def browser = sh(returnStdout: true, script: 'git describe --tags --abbrev=0')
+                   def browser = sh(returnStdout: true, script: 'git describe --tags')
                 }
             }
         }

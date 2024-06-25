@@ -37,18 +37,7 @@ stages {
                 sh 'hadolint Dockerfile --no-color --failure-threshold error | tee -a hadolint_lint.t'
             }
         }
-        /*Prueba definicion de Variables*/
-          stage('definicion de variables') {
-            steps {
-                script{
-                    def latestTag = sh(script: 'git describe --tags --abbrev=0')
-                }
-            }
-            steps {
-                sh "echo ${latestTag}"
-            }
-        }
-        /**/
+       
 
      stage('Conexion AWS Key and Login push ECR AWS') {
             steps {

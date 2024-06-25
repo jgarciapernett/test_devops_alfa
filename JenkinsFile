@@ -63,33 +63,17 @@ stages {
             }
         }
 
-     stage('Conexion AWS Key') {
+     stage('Conexion AWS Key and Login push ECR AWS') {
             steps {
               withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_devops_key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh 'aws --version'
                         sh 'aws s3 ls'
+                        sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
+                        sh 'docker tag d74cde9d43ba 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
+                        sh 'docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
                     }
             }
         }
-
-    stage('Login ECR AWS') {
-            steps {
-                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa'
-            }
-        }
-
-         stage('Etiqueta Imagen Local TAG') {
-            steps {
-                sh 'docker tag d74cde9d43ba 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
-            }
-        }
-
-        stage('Eviamos Imagen a ECR') {
-            steps {
-                sh 'docker push 211125742638.dkr.ecr.us-east-1.amazonaws.com/devops-test-alfa:tag'
-            }
-        }
-
            stage('Deploy') {
             steps {
                 echo "Finalizacion de Stage"

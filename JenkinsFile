@@ -43,7 +43,7 @@ stages {
             steps {
                   script {
                   // def browser = sh(returnStdout: true, script: 'git describe --always')
-                  // def browser = sh(returnStdout: true, script: 'git tag')
+                    sh 'git tag'
                     echo "tag usando el plugin: ${env.GIT_TAG_NAME}"
                     def browser = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
                      echo "${browser}"
